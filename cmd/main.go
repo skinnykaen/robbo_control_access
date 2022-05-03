@@ -1,7 +1,9 @@
 package cmd
 
-import "fmt"
+import (
+	"github.com/skinnykaen/robbo_control_acces.git/app"
+)
 
 func main() {
-	fmt.Println("Hello")
+	app.RunApp()
 }
