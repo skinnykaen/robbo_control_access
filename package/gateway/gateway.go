@@ -2,17 +2,17 @@ package gateway
 
 import "go.uber.org/fx"
 
-type Gateway interface {
-	GetUser(id uint) (err error)
-}
-
 type Module struct {
 	fx.Out
-	Gateway
+	AuthGateway
+}
+
+type AuthGateway interface {
+	GetUser(email, password string) (err error)
 }
 
 func Setup(postgresClient PostgresClient) Module {
 	return Module{
-		Gateway: &AuthGatewayImpl{postgresClient: &postgresClient},
+		AuthGateway: &AuthGatewayImpl{postgresClient: &postgresClient},
 	}
 }

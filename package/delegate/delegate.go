@@ -10,10 +10,10 @@ type Module struct {
 	AuthDelegate
 }
 
-func Setup(getUserUseCase usecase.GetUserUseCase) Module {
+func Setup(AuthUseCase usecase.AuthUseCase) Module {
 	return Module{
 		AuthDelegate: AuthDelegate{
-			getUserUseCase,
+			AuthUseCase,
 		},
 	}
 }

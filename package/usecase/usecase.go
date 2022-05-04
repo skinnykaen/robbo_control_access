@@ -5,17 +5,17 @@ import (
 	"go.uber.org/fx"
 )
 
-type GetUserUseCase interface {
-	Invoke(id uint) (err error)
+type AuthUseCase interface {
+	GetUser(email, password string) (err error)
 }
 
 type Module struct {
 	fx.Out
-	GetUserUseCase
+	AuthUseCase
 }
 
-func Setup(gateway gateway.Gateway) Module {
+func Setup(gateway gateway.AuthGateway) Module {
 	return Module{
-		GetUserUseCase: &GetUserUseCaseImpl{gateway},
+		AuthUseCase: &AuthUseCaseImpl{gateway},
 	}
 }

@@ -2,8 +2,12 @@ package app
 
 import (
 	"github.com/skinnykaen/robbo_control_acces.git/package/config"
+	"github.com/skinnykaen/robbo_control_acces.git/package/delegate"
 	"github.com/skinnykaen/robbo_control_acces.git/package/gateway"
+	"github.com/skinnykaen/robbo_control_acces.git/package/handlers"
 	"github.com/skinnykaen/robbo_control_acces.git/package/logger"
+	"github.com/skinnykaen/robbo_control_acces.git/package/usecase"
+	"github.com/skinnykaen/robbo_control_acces.git/server"
 	"go.uber.org/fx"
 )
 
@@ -13,6 +17,9 @@ func AppInvokeWith(options ...fx.Option) *fx.App {
 		fx.Provide(config.NewConfig),
 		fx.Provide(gateway.NewPostgresClient),
 		fx.Provide(gateway.Setup),
+		fx.Provide(usecase.Setup),
+		fx.Provide(delegate.Setup),
+		fx.Provide(handlers.NewHandler),
 	}
 	for _, option := range options {
 		di = append(di, option)
@@ -21,5 +28,5 @@ func AppInvokeWith(options ...fx.Option) *fx.App {
 }
 
 func RunApp() {
-	AppInvokeWith(fx.Invoke()).Run()
+	AppInvokeWith(fx.Invoke(server.NewServer)).Run()
 }
